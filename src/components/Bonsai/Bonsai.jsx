@@ -6,13 +6,8 @@ import './BonsaiMain.css';
 
 function Bonsai() {
   const pricingCheckboxRef = useRef();
+  const [activeAccordion, setActiveAccordion] = useState([]);
   const [pricing, setPricing] = useState('monthly');
-
-  const handlePricingChange = () => {
-    if (pricingCheckboxRef.current) {
-      setPricing(pricing === 'monthly' ? 'yearly' : 'monthly');
-    }
-  };
 
   const workflowDropdownItems = [
     {
@@ -114,6 +109,22 @@ function Bonsai() {
       ],
     },
   ];
+
+  const handlePricingChange = () => {
+    if (pricingCheckboxRef.current) {
+      setPricing(pricing === 'monthly' ? 'yearly' : 'monthly');
+    }
+  };
+
+  const handleAccordionClick = id => {
+    setActiveAccordion(() => {
+      if (activeAccordion.includes(id)) {
+        return activeAccordion.filter(i => i !== id);
+      } else {
+        return [...activeAccordion, id];
+      }
+    });
+  };
 
   return (
     <div id="bonsai-page">
@@ -251,19 +262,376 @@ function Bonsai() {
         </div>
       </nav>
       <main>
-        <h1>Plans & Pricing</h1>
-        <span>Monthly</span>
-        <label className="switch">
-          <input
-            type="checkbox"
-            id="pricingCheckbox"
-            value="pricingValue"
-            ref={pricingCheckboxRef}
-            onChange={handlePricingChange}
-          />
-          <span className="slider" />
-        </label>
-        <span>Yearly</span>
+        <header id="main-header">
+          <h1>Plans & Pricing</h1>
+          <div id="main-slider">
+            <span
+              className={
+                pricing === 'monthly' ? 'active-pricing' : 'inactive-pricing'
+              }
+            >
+              Monthly
+            </span>
+            <label className="switch">
+              <input
+                type="checkbox"
+                id="pricingCheckbox"
+                value="pricingValue"
+                ref={pricingCheckboxRef}
+                onChange={handlePricingChange}
+              />
+              <span className="slider" />
+            </label>
+            <span
+              className={
+                pricing === 'yearly' ? 'active-pricing' : 'inactive-pricing'
+              }
+            >
+              Yearly
+            </span>
+          </div>
+        </header>
+        <footer id="main-footer">
+          <div id="footer-left">
+            <div className="footer-heading">Product</div>
+            <div className="footer-content">
+              <div className="footer-content-block">
+                <NavLink to="./freelance-proposals">Proposals</NavLink>
+                <NavLink to="./contracts">Contracts</NavLink>
+                <NavLink to="./invoicing">Invoicing</NavLink>
+                <NavLink to="./freelance-crm">Client CRM</NavLink>
+                <NavLink to="./freelance-time-tracking">Time Tracking</NavLink>
+                <NavLink to="./freelance-task-management">
+                  Task Tracking
+                </NavLink>
+                <NavLink to="./freelance-forms">Forms</NavLink>
+                <NavLink to="./freelance-accounting-software">
+                  Accounting
+                </NavLink>
+                <NavLink to="./bonsai-tax">Bonsai Tax</NavLink>
+                <NavLink to="./bonsai-cash">Bonsai Cash</NavLink>
+              </div>
+              <div className="footer-content-block">
+                <NavLink to="./pricing" style={{ color: '#00b289' }}>
+                  Pricing
+                </NavLink>
+                <NavLink to="./reviews">Bonsai Reviews</NavLink>
+              </div>
+            </div>
+          </div>
+          <div id="footer-center">
+            <div className="footer-heading">Free Resources</div>
+            <div className="footer-content">
+              <div className="footer-content-block">
+                <NavLink to="./resources">Freelance Resources</NavLink>
+                <NavLink to="./blog">Freelance Blog by Bonsai</NavLink>
+                <NavLink to="./blog/how-to-write-a-contract">
+                  How to Write a Contract
+                </NavLink>
+                <NavLink to="./online-signature-maker">
+                  Online Signature Maker
+                </NavLink>
+              </div>
+              <div className="footer-content-block">
+                <NavLink to="./self-employment-tax">
+                  Self-Employed Taxes Hub
+                </NavLink>
+                <NavLink to="./self-employment-tax-calculator">
+                  Self-Employed Tax Calculator
+                </NavLink>
+                <NavLink to="./blog/tax-deductions-for-self-employed">
+                  Self-Employed Tax Deductions
+                </NavLink>
+              </div>
+              <div className="footer-content-block">
+                <div className="footer-subheading">Templates</div>
+                <div className="accordion">
+                  <div className="accordion-header">
+                    <NavLink to="./templates/invoices">
+                      Invoice Templates
+                    </NavLink>
+                    <RxCaretDown
+                      onClick={() => handleAccordionClick('invoices')}
+                    />
+                  </div>
+                  <div
+                    className={
+                      activeAccordion.includes('invoices')
+                        ? 'accordion-content'
+                        : 'accordion-content hidden'
+                    }
+                  >
+                    <NavLink to="./a/freelance-invoice-generator">
+                      Invoice Generator
+                    </NavLink>
+                    <NavLink to="./a/blank-invoice-template">
+                      Blank Invoice Template
+                    </NavLink>
+                    <NavLink to="./a/consultant-invoice-template-excel">
+                      Consultant Invoice Template
+                    </NavLink>
+                    <NavLink to="./a/editable-invoice-template-pdf">
+                      Editable Invoice Template
+                    </NavLink>
+                    <NavLink to="./a/freelance-graphic-designer-invoice-template">
+                      Graphic Design Invoice
+                    </NavLink>
+                    <NavLink to="./a/web-design-invoice-template">
+                      Web Design Invoice
+                    </NavLink>
+                    <NavLink to="./a/independent-contractor-invoice">
+                      Contractor Invoice Template
+                    </NavLink>
+                    <NavLink to="./a/photography-invoice-template">
+                      Photography Invoice Template
+                    </NavLink>
+                    <NavLink to="./a/self-employed-invoice-template">
+                      Self Employed Invoice Template
+                    </NavLink>
+                  </div>
+                </div>
+                <div className="accordion">
+                  <div className="accordion-header">
+                    <NavLink to="./templates/proposals">
+                      Proposal Templates
+                    </NavLink>
+                    <RxCaretDown
+                      onClick={() => handleAccordionClick('proposals')}
+                    />
+                  </div>
+                  <div
+                    className={
+                      activeAccordion.includes('proposals')
+                        ? 'accordion-content'
+                        : 'accordion-content hidden'
+                    }
+                  >
+                    <NavLink to="./a/website-proposal-template-word">
+                      Website Proposal Template
+                    </NavLink>
+                    <NavLink to="./a/digital-marketing-proposal-template">
+                      Digital Marketing Proposal Template
+                    </NavLink>
+                    <NavLink to="./a/social-media-marketing-proposal">
+                      Social Media Marketing Proposal
+                    </NavLink>
+                    <NavLink to="./a/graphic-design-proposal-pdf">
+                      Graphic Design Proposal
+                    </NavLink>
+                    <NavLink to="./a/freelance-proposal-example">
+                      Freelance Proposal Template
+                    </NavLink>
+                    <NavLink to="./a/seo-proposal-template">
+                      SEO Proposal Template
+                    </NavLink>
+                  </div>
+                </div>
+                <div className="accordion">
+                  <div className="accordion-header">
+                    <NavLink to="./templates/contracts">
+                      Contract Templates
+                    </NavLink>
+                    <RxCaretDown
+                      onClick={() => handleAccordionClick('contracts')}
+                    />
+                  </div>
+                  <div
+                    className={
+                      activeAccordion.includes('contracts')
+                        ? 'accordion-content'
+                        : 'accordion-content hidden'
+                    }
+                  >
+                    <NavLink to="./a/online-contract-maker">
+                      Online Contract
+                    </NavLink>
+                    <NavLink to="./a/freelance-design-contract">
+                      Graphic Design Contract
+                    </NavLink>
+                    <NavLink to="./a/freelance-contract-template">
+                      Freelance Contract Template
+                    </NavLink>
+                    <NavLink to="./a/social-media-contract-template">
+                      Social Media Marketing Contract
+                    </NavLink>
+                    <NavLink to="./a/software-development-contract-template-pdf">
+                      Software Development Contract
+                    </NavLink>
+                    <NavLink to="./a/freelance-website-design-contract">
+                      Web Design Contract
+                    </NavLink>
+                    <NavLink to="./a/video-production-contract-pdf">
+                      Video Production Contract
+                    </NavLink>
+                    <NavLink to="./a/freelance-public-relations-contract-template">
+                      Public Relations Contract
+                    </NavLink>
+                    <NavLink to="./a/translation-contract">
+                      Translation Contract
+                    </NavLink>
+                  </div>
+                </div>
+                <div className="accordion">
+                  <div className="accordion-header">
+                    <NavLink to="./templates/agreements">
+                      Agreement Templates
+                    </NavLink>
+                    <RxCaretDown
+                      onClick={() => handleAccordionClick('agreements')}
+                    />
+                  </div>
+                  <div
+                    className={
+                      activeAccordion.includes('agreements')
+                        ? 'accordion-content'
+                        : 'accordion-content hidden'
+                    }
+                  >
+                    <NavLink to="./a/monthly-retainer-agreement">
+                      Retainer Agreement Template
+                    </NavLink>
+                    <NavLink to="./a/social-media-influencer-agreement">
+                      Influencer Agreement Template
+                    </NavLink>
+                    <NavLink to="./a/influencer-collaboration-agreement-template">
+                      Collaboration Agreement Template
+                    </NavLink>
+                    <NavLink to="./a/software-development-contract-template-pdf">
+                      Software Development Agreement
+                    </NavLink>
+                    <NavLink to="./a/digital-marketing-contract-template">
+                      Marketing Agreement Template
+                    </NavLink>
+                  </div>
+                </div>
+                <div className="accordion">
+                  <div className="accordion-header">
+                    <NavLink to="./templates/scope-of-work">
+                      Scope of Work Templates
+                    </NavLink>
+                    <RxCaretDown
+                      onClick={() => handleAccordionClick('scope-of-work')}
+                    />
+                  </div>
+                  <div
+                    className={
+                      activeAccordion.includes('scope-of-work')
+                        ? 'accordion-content'
+                        : 'accordion-content hidden'
+                    }
+                  >
+                    <NavLink to="./a/website-development-scope-of-work-template">
+                      Website Development Scope of Work
+                    </NavLink>
+                    <NavLink to="./a/marketing-scope-of-work">
+                      Digital Marketing Scope of Work
+                    </NavLink>
+                    <NavLink to="./a/sample-statement-of-work-for-consulting-services">
+                      Consultant Statement of Work Template
+                    </NavLink>
+                    <NavLink to="./a/sow-for-software-development">
+                      Software Development Scope of Work
+                    </NavLink>
+                  </div>
+                </div>
+                <div className="accordion">
+                  <div className="accordion-header">
+                    <NavLink to="./templates/quotes">Quote Templates</NavLink>
+                    <RxCaretDown
+                      onClick={() => handleAccordionClick('quotes')}
+                    />
+                  </div>
+                  <div
+                    className={
+                      activeAccordion.includes('quotes')
+                        ? 'accordion-content'
+                        : 'accordion-content hidden'
+                    }
+                  >
+                    <NavLink to="./a/freelance-quotation-template">
+                      Freelance Quotation Template
+                    </NavLink>
+                    <NavLink to="./a/web-design-quotation">
+                      Web Design Quotation Template
+                    </NavLink>
+                    <NavLink to="./a/graphic-design-quotation">
+                      Graphic Design Quotation Template
+                    </NavLink>
+                    <NavLink to="./a/interior-design-quotation-sample">
+                      Interior Design Quotation Template
+                    </NavLink>
+                    <NavLink to="./a/video-production-quotation-sample-pdf">
+                      Video Production Quotation Template
+                    </NavLink>
+                    <NavLink to="./a/social-media-marketing-quotation">
+                      Social Media Marketing Quotation
+                    </NavLink>
+                  </div>
+                </div>
+                <NavLink to="./credit-note-templates">
+                  Credit Note Templates
+                </NavLink>
+                <NavLink to="./estimate-templates">Estimate Templates</NavLink>
+                <NavLink to="./templates/forms">Form Templates</NavLink>
+              </div>
+            </div>
+          </div>
+          <div id="footer-right">
+            <div className="footer-heading">Bonsai</div>
+            <div className="footer-content">
+              <div className="footer-content-block">
+                <NavLink to="./about">About</NavLink>
+                <NavLink to="./jobs">Careers</NavLink>
+                <NavLink to="https://help.hellobonsai.com">Support</NavLink>
+                <NavLink to="https://www.linkedin.com/company/bonsai">
+                  LinkedIn
+                </NavLink>
+                <NavLink to="https://www.twitter.com/bonsaiinc">
+                  Twitter
+                </NavLink>
+                <NavLink to="./privacy">Privacy Policy</NavLink>
+                <NavLink to="./terms">Legal</NavLink>
+              </div>
+              <div className="footer-content-block">
+                <NavLink to="./affiliates">Affiliates</NavLink>
+                <NavLink to="./write-for-us">Write for Us</NavLink>
+              </div>
+              <div className="footer-content-block">
+                <div className="accordion">
+                  <div className="accordion-header">
+                    <NavLink to="./alternatives">Comparisons</NavLink>
+                    <RxCaretDown
+                      onClick={() => handleAccordionClick('alternatives')}
+                    />
+                  </div>
+                  <div
+                    className={
+                      activeAccordion.includes('alternatives')
+                        ? 'accordion-content'
+                        : 'accordion-content hidden'
+                    }
+                  >
+                    <NavLink to="./blog/freshbooks-alternatives">
+                      Freshbooks Alternatives
+                    </NavLink>
+                    <NavLink to="./alternatives/quickbooks-alternatives">
+                      Quickbooks Alternatives
+                    </NavLink>
+                    <NavLink to="./alternatives/wave-vs-quickbooks-vs-bonsai">
+                      Wave vs Quickbooks
+                    </NavLink>
+                    <NavLink to="./alternatives/xero-vs-quickbooks-vs-bonsai">
+                      Xero vs Quickbooks
+                    </NavLink>
+                    <NavLink to="./alternatives/freshbooks-vs-quickbooks-vs-bonsai">
+                      Freshbooks vs Quickbooks
+                    </NavLink>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
       </main>
     </div>
   );
