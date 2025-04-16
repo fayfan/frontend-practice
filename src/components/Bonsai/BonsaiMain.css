@@ -20,11 +20,15 @@
   text-wrap: wrap;
 }
 
-#bonsai-page #footer-center,
+#bonsai-page #footer-center {
+  text-wrap: nowrap;
+  width: 30%;
+}
+
 #bonsai-page #footer-left,
 #bonsai-page #footer-right {
   text-wrap: nowrap;
-  width: 30%;
+  width: 25%;
 }
 
 #bonsai-page .footer-content {
